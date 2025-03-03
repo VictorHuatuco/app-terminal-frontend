@@ -84,27 +84,27 @@ export class VideoComponent {
   playVideo(mute: boolean = false): void {
     if (this.videos.length === 0) return;
 
-    this.currentVideo = this.videos[this.videoIndex];
-
+    const nextVideo = this.videos[this.videoIndex];
     const videoElement = document.getElementById(
       'videoPlayer'
     ) as HTMLVideoElement;
+
     if (videoElement) {
-      videoElement.src = this.currentVideo; // Asignamos la fuente del video
-      videoElement.muted = mute; // Primera reproducción en mute
-      videoElement.load();
-      videoElement
-        .play()
-        .then(() => {
-          console.log('Reproduciendo:', this.currentVideo);
-        })
-        .catch((error) => {
-          console.error('Error al reproducir el video:', error);
-        });
+      // Crear un nuevo elemento video en memoria para pre-cargar
+      const preloadedVideo = document.createElement('video');
+      preloadedVideo.src = nextVideo;
+      preloadedVideo.muted = mute;
+      preloadedVideo.preload = 'auto'; // Se carga en segundo plano
+
+      preloadedVideo.oncanplaythrough = () => {
+        videoElement.src = nextVideo; // Solo cambiamos cuando ya está listo
+        videoElement.muted = mute;
+        videoElement.play();
+      };
 
       videoElement.onended = () => {
         this.videoIndex = (this.videoIndex + 1) % this.videos.length;
-        this.playVideo(this.userInteracted ? false : true); // Si el usuario ya interactuó, desmuteamos
+        this.playVideo(this.userInteracted ? false : true);
       };
     }
   }
