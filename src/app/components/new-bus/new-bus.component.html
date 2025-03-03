@@ -1,0 +1,11 @@
+<form [formGroup]="busData">
+  <label for="transportationCompany">Empresa de Transporte:</label>
+  <input type="text" id="transportationCompany" formControlName="company" />
+
+  <label for="travelRoute">Ruta de viaje:</label>
+  <input type="text" id="travelRoute" formControlName="travelRoute" />
+
+  <button type="submit" [disabled]="busData.invalid" (click)="addBus()">
+    Agregar bus
+  </button>
+</form>
