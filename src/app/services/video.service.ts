@@ -6,7 +6,7 @@ import { io, Socket } from 'socket.io-client';
 })
 export class VideoService {
   private socket: Socket;
-  private backendUrl = 'http://localhost:5000'; // URL del backend Flask
+  private backendUrl = `http://${window.location.hostname}:5000`;  // URL del backend Flask
 
   constructor() {
     // Conectar con el backend usando Socket.IO
