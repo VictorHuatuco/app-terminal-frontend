@@ -1,11 +1,27 @@
-<form [formGroup]="busData">
-  <label for="transportationCompany">Empresa de Transporte:</label>
-  <input type="text" id="transportationCompany" formControlName="company" />
+<div class="form-container">
+  <form [formGroup]="busData">
+    <mat-form-field appearance="outline">
+      <mat-label>Empresa de Transporte:</mat-label>
+      <input matInput type="text" formControlName="company" />
+    </mat-form-field>
 
-  <label for="travelRoute">Ruta de viaje:</label>
-  <input type="text" id="travelRoute" formControlName="travelRoute" />
+    <mat-form-field appearance="outline">
+      <mat-label>Ruta de viaje:</mat-label>
+      <input matInput type="text" formControlName="destination" />
+    </mat-form-field>
 
-  <button type="submit" [disabled]="busData.invalid" (click)="addBus()">
-    Agregar bus
-  </button>
-</form>
+    <mat-form-field appearance="outline">
+      <mat-label>Puerta de embarque:</mat-label>
+      <input matInput type="text" formControlName="boardingGate" />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="busData.invalid"
+      (click)="addBus()"
+    >
+      Agregar bus
+    </button>
+  </form>
+</div>

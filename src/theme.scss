@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Definir las paletas usando la API de Angular Material
+$my-primary: mat.$violet-palette;
+$my-accent: mat.$violet-palette;
+$my-warn: mat.$violet-palette;
+
+// Crear el tema (en este ejemplo, un tema light)
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $my-primary,
+      // accent: $my-accent,
+      // warn: $my-warn,,,,
+    ),
+  )
+);
+
+// Incluir los estilos de Material
+html {
+  @include mat.all-component-themes($theme);
+}

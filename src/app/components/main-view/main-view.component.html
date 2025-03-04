@@ -1,11 +1,43 @@
 <div class="main-container">
-  <section class="buses-list">
-    <h2>Buses en terminal</h2>
-    <ul>
-      <li *ngFor="let bus of allBus">{{ bus }}</li>
-    </ul>
-  </section>
-
-  <!-- <section class="video-container"></section> -->
+  <!-- VIDEO PUBLICIDAD -->
   <app-video></app-video>
+  <div class="buses-list">
+    <!-- LISTA DE BUSES -->
+    <table
+      mat-table
+      [dataSource]="dataOnArrivingBuses"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="Empresa">
+        <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
+        <td mat-cell *matCellDef="let bus">{{ bus.company }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Destino">
+        <th mat-header-cell *matHeaderCellDef>DESTINO</th>
+        <td mat-cell *matCellDef="let bus">{{ bus.destination }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Hora">
+        <th mat-header-cell *matHeaderCellDef>HORA</th>
+        <td mat-cell *matCellDef="let bus">{{ bus.arrivalTime }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Embarque">
+        <th mat-header-cell *matHeaderCellDef>EMBARQUE</th>
+        <td mat-cell *matCellDef="let bus">{{ bus.boardingGate }}</td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef=" ">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let bus">{{ bus.company }}</td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <!-- <ul>
+      <li *ngFor="let bus of allBuses">{{ bus }}</li>
+    </ul> -->
+  </div>
 </div>
