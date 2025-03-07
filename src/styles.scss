@@ -5,3 +5,41 @@ html,
 body {
   margin: 0px !important;
 }
+
+.form-container {
+  padding: 50px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// .mat-mdc-snack-bar-container {
+//   margin: 15px !important;
+// }
+
+// .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+//   font-weight: bold;
+//   color: white;
+//   text-align: center;
+// }
+
+.mat-mdc-snack-bar-container.snackbar-success .mat-mdc-snackbar-surface {
+  background-color: #4caf50 !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-info .mat-mdc-snackbar-surface {
+  background-color: var(--menu-background) !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-error .mat-mdc-snackbar-surface {
+  background-color: #f44336 !important;
+}
+
+// .mat-mdc-snack-bar-container
+//   .mat-mdc-snackbar-surface
+//   .mat-mdc-button:not(:disabled) {
+//   color: white !important;
+// }
