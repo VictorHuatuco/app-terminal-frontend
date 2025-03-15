@@ -1,0 +1,34 @@
+<div class="nav-btn-container">
+  <button
+    type="button"
+    (click)="handleRedirection('Anuncios')"
+    [ngClass]="{
+      active: activeButton === 'Anuncios',
+      inactive: activeButton !== 'Anuncios'
+    }"
+  >
+    Anuncios
+  </button>
+  <button
+    type="button"
+    (click)="handleRedirection('Rutas de viaje')"
+    [ngClass]="{
+      active: activeButton === 'Rutas de viaje',
+      inactive: activeButton !== 'Rutas de viaje'
+    }"
+  >
+    Viajes
+  </button>
+  <button
+    type="button"
+    (click)="handleRedirection('Publicidad')"
+    [ngClass]="{
+      active: activeButton === 'Publicidad',
+      inactive: activeButton !== 'Publicidad'
+    }"
+  >
+    Publicidad
+  </button>
+</div>
+<!-- <button mat-raised-button (click)="handleRedirection()">Agregar</button>
+<button mat-raised-button (click)="handleRedirection()">Agregar</button> -->

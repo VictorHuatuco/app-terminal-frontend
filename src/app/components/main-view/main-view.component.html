@@ -1,13 +1,31 @@
-<div class="main-container">
-  <!-- VIDEO PUBLICIDAD -->
-  <app-video></app-video>
+<div class="main-view-container">
+  <div class="container-top-content">
+    <div class="left-content">
+      <img src="assets/images/logo.jpg" alt="logo" class="logo" />
+      <h1>SALIDAS</h1>
+      <!-- HORA -->
+      <div class="clock">
+        <span>{{ currentDate$ | async }}</span>
+        <img src="assets/images/bus.png" alt="bus" class="small-img" />
+        <span>{{ currentTime$ | async }}</span>
+      </div>
+      <img
+        src="assets/images/logos-empresas.jpg"
+        alt="logos-empresas"
+        class="brands"
+      />
+    </div>
+    <!-- VIDEO PUBLICIDAD -->
+    <video controls class="video">
+      <source src="/assets/videos/anuncio1.mp4" type="video/mp4" />
+      Tu navegador no soporta la etiqueta de video.
+    </video>
+
+    <!-- <app-video></app-video> -->
+  </div>
+  <!-- LISTA DE BUSES -->
   <div class="buses-list">
-    <!-- LISTA DE BUSES -->
-    <table
-      mat-table
-      [dataSource]="dataOnArrivingBuses"
-      class="mat-elevation-z8"
-    >
+    <table mat-table [dataSource]="dataOnArrivingBuses">
       <ng-container matColumnDef="Empresa">
         <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
         <td mat-cell *matCellDef="let bus">{{ bus.company }}</td>
@@ -26,6 +44,11 @@
       <ng-container matColumnDef="Embarque">
         <th mat-header-cell *matHeaderCellDef>EMBARQUE</th>
         <td mat-cell *matCellDef="let bus">{{ bus.boardingGate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Observación">
+        <th mat-header-cell *matHeaderCellDef>OBSERVACIÓN</th>
+        <td mat-cell *matCellDef="let bus">{{ bus.observation }}</td>
       </ng-container>
 
       <!-- <ng-container matColumnDef=" ">

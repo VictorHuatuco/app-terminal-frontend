@@ -4,4 +4,109 @@
 .mdc-data-table__cell,
 .mat-mdc-header-cell {
   text-align: center;
+  font-size: 1.6rem;
+}
+
+.mdc-data-table__cell {
+  background-color: var(--primary-text-color) !important;
+  font-family: "Inter", sans-serif;
+}
+
+.mat-mdc-header-cell {
+  background-color: var(--primary-color) !important;
+  color: var(--primary-text-color) !important;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+// thead {
+//   background-color: var(--menu-background) !important;
+// }
+
+thead > tr > th {
+  // color: red !important;
+  text-align: center !important;
+  font-weight: bold;
+}
+
+// tr > td {
+//   text-align: center !important;
+// }
+
+.mat-mdc-header-row,
+.mat-mdc-row {
+  height: 40px !important;
+}
+
+.mat-mdc-header-row {
+  // font-weight: 500;
+}
+
+// thead tr,
+// tbody {
+//   height: 10px !important;
+// }
+
+// .mat-mdc-table {
+//   height: 10px !important;
+// }
+
+.main-view-container,
+.left-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-content {
+  background-color: var(--primary-color);
+  flex: 1;
+  justify-content: space-between;
+}
+
+.container-top-content {
+  display: flex;
+}
+
+.left-content .logo {
+  width: 60px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.clock {
+  display: flex;
+  gap: 10px;
+  // padding: 5px;
+  width: 100%;
+  // background-color: rgba(255, 255, 255, 0.5);
+  // text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-text-color);
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  color: var(--primary-text-color);
+  font-size: 2.9rem;
+  line-height: 1;
+}
+
+.brands {
+  height: 200px;
+  width: auto;
+}
+
+.video {
+  // width: 600px;
+  height: 60vh;
+}
+
+.small-img {
+  width: 50px;
 }

@@ -4,4 +4,5 @@ export interface Bus {
   destination: string;
   arrivalTime: string;
   boardingGate: string;
+  observation: string;
 }

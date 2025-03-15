@@ -1,0 +1,9 @@
+<div class="general-container">
+  <div class="option-wrapper" *ngFor="let button of buttonsData">
+    <!-- <img [src]="button.img" alt=""> -->
+    <i [class]="button.icon"></i>
+    <button mat-raised-button (click)="redirectToPage(button.text)">
+      {{ button.text }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<mat-toolbar class="navbar">
+  <!-- <button mat-icon-button (click)="toggleSidenav.emit()">
+    <mat-icon class="color-icon">menu</mat-icon>
+  </button> -->
+  <!-- <span class="title">{{ navbarTitle }}</span> -->
+  <img
+    src="https://www.dehuancayo.com/images/stories/terminal-terrestre-huancayo.jpg"
+    alt="logo"
+    class="logo"
+  />
+  <span class="spacer"></span>
+  <ng-container>
+    <button
+      *ngIf="isMobileView"
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="button-icon"
+    >
+      <mat-icon class="color-icon">account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <ul class="menu-ul">
+        <li>
+          <button *ngIf="isMobileView" mat-menu-item>
+            <div class="user-navbar">
+              <span class="user-name">{{ name }}</span>
+              <span class="user-role">{{ role }}</span>
+            </div>
+          </button>
+        </li>
+        <li>
+          <button mat-menu-item (click)="profile()">
+            <mat-icon>person</mat-icon>
+            <span>Mi Perfil</span>
+          </button>
+        </li>
+        <li>
+          <button mat-menu-item (click)="notifications()">
+            <mat-icon>notifications</mat-icon>
+            <span>Notificaciones</span>
+          </button>
+        </li>
+        <li>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </li>
+      </ul>
+    </mat-menu>
+  </ng-container>
+  <div *ngIf="!isMobileView" class="user-navbar" [matMenuTriggerFor]="menu">
+    <span class="user-name">{{ name }}</span>
+    <span class="user-role">{{ role }}</span>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,67 @@
+<!-- <div class="card-container">
+  <div class="info-container">
+    <span class="text-label">Empresa:</span>
+    <p class="text-bold">{{ data.company }}</p>
+  </div>
+  <div class="info-container">
+    <div class="info-item">
+      <span class="text-label">Ruta:</span>
+      <span>{{ data.destination }}</span>
+    </div>
+    <div class="info-item">
+      <span class="text-label">Hora:</span>
+      <span>{{ data.departureTime }}</span>
+    </div>
+    <div *ngIf="data.boardingGate" class="info-item">
+      <span class="text-label">Embarque:</span>
+      <span>{{ data.boardingGate }}</span>
+    </div>
+    <div *ngIf="data.observation" class="info-item">
+      <span class="text-label">Observación:</span>
+      <span>{{ data.observation }}</span>
+    </div>
+  </div>
+  <div class="actions-container">
+    <button>
+      <i class="fa-solid fa-trash"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+  </div>
+</div> -->
+
+<div class="card-container">
+  <div class="info-container">
+    <div>
+      <p class="text-bold">{{ data.company }}</p>
+      <span>{{ data.destination }} - {{ data.departureTime }} </span>
+    </div>
+    <div class="details">
+      <div *ngIf="data.boardingGate" class="details-item">
+        <span class="text-label">Embarque:</span>
+        <span class="text-content">Puerta {{ data.boardingGate }}</span>
+      </div>
+      <div *ngIf="data.observation" class="details-item">
+        <span class="text-label">Observación:</span>
+        <span
+          [ngClass]="{
+            red: data.observation === 'Cancelado',
+            yellow: data.observation === 'Atrasado',
+            green: data.observation === 'Disponible',
+          }"
+          >{{ data.observation }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-container">
+    <button>
+      <i class="fa-solid fa-trash"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="container-button" style="margin-bottom: 20px">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <button mat-raised-button (click)="handleRedirection('Agregar')">
+    Agregar
+  </button>
+</div>
+
+<div class="grid-container">
+  <app-info-card
+    [data]="announcement"
+    *ngFor="let announcement of announcementsData"
+  ></app-info-card>
+</div>

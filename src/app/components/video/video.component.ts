@@ -10,48 +10,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './video.component.scss',
 })
 export class VideoComponent {
-  // videos: string[] = [];
-  // currentVideo: string = '';
-  // videoIndex: number = 0;
-  // isPlaying: boolean = false;
-  // @ViewChild('videoPlayer', { static: false })
-  // videoPlayer!: ElementRef<HTMLVideoElement>;
-  // constructor(private videoService: VideoService) {}
-  // ngOnInit(): void {
-  //   this.loadVideos();
-  //   this.videoService.onVideosReceived((videos) => {
-  //     this.videos = videos;
-  //   });
-  // }
-  // loadVideos(): void {
-  //   this.videoService.requestVideos();
-  // }
-  // startPlayback(): void {
-  //   if (!this.isPlaying && this.videos.length > 0) {
-  //     this.isPlaying = true;
-  //     this.playVideo();
-  //   }
-  // }
-  // playVideo(): void {
-  //   if (this.videos.length === 0 || !this.videoPlayer) return;
-  //   this.currentVideo = this.videos[this.videoIndex];
-  //   const videoElement = this.videoPlayer.nativeElement;
-  //   videoElement.src = this.currentVideo;
-  //   videoElement.load();
-  //   videoElement
-  //     .play()
-  //     .then(() => {
-  //       console.log('Reproduciendo:', this.currentVideo);
-  //     })
-  //     .catch((error: any) => {
-  //       console.error('Error al reproducir el video:', error);
-  //     });
-  //   videoElement.onended = () => {
-  //     this.videoIndex = (this.videoIndex + 1) % this.videos.length;
-  //     this.playVideo();
-  //   };
-  // }
-
   videos: string[] = [];
   currentVideo: string = '';
   videoIndex: number = 0;

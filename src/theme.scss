@@ -3,9 +3,16 @@
 @include mat.core();
 
 // Definir las paletas usando la API de Angular Material
-$my-primary: mat.$violet-palette;
-$my-accent: mat.$violet-palette;
-$my-warn: mat.$violet-palette;
+$my-primary: mat.$green-palette;
+$my-accent: mat.$spring-green-palette;
+$my-warn: mat.$red-palette;
+
+// Definir variables de colores
+$primary-color: #3d8867;
+$highlight-color: #d2cb3f;
+$background-color: white;
+$primary-text-color: white;
+$secondary-text-color: black;
 
 // Crear el tema (en este ejemplo, un tema light)
 $theme: mat.define-theme(
@@ -14,10 +21,19 @@ $theme: mat.define-theme(
       theme-type: light,
       primary: $my-primary,
       // accent: $my-accent,
-      // warn: $my-warn,,,,
+      // warn: $my-warn,,,,,,,,,,
     ),
   )
 );
+
+:root {
+  --primary-color: #{$primary-color};
+  --highlight-color: #{$highlight-color};
+  --background-color: #{$background-color};
+  --primary-text-color: #{$primary-text-color};
+  --secondary-text-color: #{$secondary-text-color};
+  // --logo: #{$logo-default};
+}
 
 // Incluir los estilos de Material
 html {

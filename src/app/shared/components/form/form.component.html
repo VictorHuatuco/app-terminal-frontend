@@ -1,0 +1,66 @@
+<div class="general-container">
+  <form [formGroup]="formData" (ngSubmit)="emitFormData()">
+    <ng-container *ngFor="let field of formFields">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <ng-container [ngSwitch]="field.type">
+          <!-- Input de texto -->
+          <input
+            *ngSwitchCase="'text'"
+            matInput
+            [formControlName]="field.formControl"
+            type="text"
+          />
+
+          <!-- Dropdown (Select) -->
+          <mat-select
+            *ngSwitchCase="'select'"
+            [formControlName]="field.formControl"
+          >
+            <mat-option
+              *ngFor="let option of field.options"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+        </ng-container>
+        <mat-error
+          *ngIf="
+            formData.get(field.formControl)?.invalid &&
+            formData.get(field.formControl)?.touched
+          "
+        >
+          Este campo es obligatorio
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <div class="btns-wrapper">
+      <ng-container *ngFor="let button of buttonsData"
+        ><button
+          mat-raised-button
+          [type]="button.type"
+          *ngIf="button.type === 'submit'"
+        >
+          {{ button.text }}
+        </button>
+        <button
+          mat-raised-button
+          [type]="button.type"
+          *ngIf="button.type != 'submit'"
+          (click)="onEmitAction()"
+          class="outline"
+        >
+          {{ button.text }}
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- <ng-container
+      ><button mat-raised-button (click)="onRedirectToMenu()">
+        Cancelar
+      </button></ng-container
+    > -->
+  </form>
+</div>
