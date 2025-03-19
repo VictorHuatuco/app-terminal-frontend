@@ -1,5 +1,5 @@
 export interface Announcement {
-  id: string;
+  id: number;
   company: string;
   destination: string;
   departureTime: string;

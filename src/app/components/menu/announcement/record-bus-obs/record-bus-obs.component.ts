@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,12 +10,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SocketService } from '../../../../services/socket.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormComponent } from '../../../../shared/components/form/form.component';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { NavigationService } from '../../../../services/navigation.service';
+import { AnnouncementService } from '../../../../services/announcement.service';
+import { Announcement } from '../../../../interfaces/announcement';
+import { TravelsService } from '../../../../services/travels.service';
 
 @Component({
   selector: 'app-record-bus-observation',
@@ -33,7 +36,7 @@ import { NavigationService } from '../../../../services/navigation.service';
   templateUrl: './record-bus-obs.component.html',
   styleUrl: './record-bus-obs.component.scss',
 })
-export class RecordBusObservationComponent {
+export class RecordBusObservationComponent implements OnInit {
   public formFields = [
     {
       label: 'Listado de viajes disponibles',
@@ -78,18 +81,58 @@ export class RecordBusObservationComponent {
     { text: 'Cancelar', type: 'button' },
   ];
   public isLoading = false;
-  ngOnInit() {
-    // this.busData.valueChanges.subscribe(() => {
-    //   // console.log(this.busData.value);
-    // });
+  public isEditMode: boolean = false;
+  public title: string = '';
+  public id: number = 0;
+  // public formData: FormGroup = new FormGroup({});
+  public formDataPatched: FormGroup = new FormGroup({});
+  public isFormDataPatched: boolean = false;
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.title = 'Editar estado del bus';
+        this.id = params['id'];
+
+        // implementar endpoint para obtener el announcement
+        // this.announcementService.getById(this.id).subscribe({
+        //   next: (response) => {
+        //     if (response.error != null) {
+        //       this.navigation.onMainMenuNav('Anuncios');
+        //     }
+        // this.isFormDataPatched = true
+        //     this.formDataPatched.patchValue(response.data);
+        //   },
+        // });
+      } else {
+        this.title = 'Anunciar estado del bus';
+      }
+    });
+
+    this.getTavels();
   }
   constructor(
     private socketService: SocketService,
     private navigation: NavigationService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private route: ActivatedRoute,
+    private travelsService: TravelsService // private announcementService: AnnouncementService
   ) {}
-  onSubmit($event: FormGroup): void {
-    const formData = $event.value;
+
+  getTavels() {
+    this.travelsService.getTravels().subscribe({
+      next: (response) => {
+        console.log('lista viajes', response);
+      },
+      error: (error) => {
+        console.error('Error', error.error);
+      },
+    });
+  }
+
+  onSubmit(data: FormGroup): void {
+    const formData = data.value;
     // this.socketService.sendBus(this.busData.value);
     if (this.isLoading) return;
     this.isLoading = true;
@@ -102,6 +145,45 @@ export class RecordBusObservationComponent {
       this.isLoading = false;
       return;
     }
+
+    // maneja el envio del formulario
+    // if (this.isEditMode) {
+    //   formData.id = this.id;
+    //   this.announcementService.updateAnnouncement(formData).subscribe({
+    //     next: (response) => {
+    //       if (response.code == 200) {
+    //         this.navigation.onMainMenuNav('Anuncios');
+    //         this.snackbarService.show('Actualizado exitosamente', 'success');
+    //       }
+    //     },
+    //     error: (error) => {
+    //       console.error('Error token', error.error);
+    //       this.snackbarService.show(
+    //         'Ocurrió un error al actualizar la información. Inténtelo de nuevo.',
+    //         'error'
+    //       );
+    //       this.isLoading = false;
+    //     },
+    //   });
+    // } else {
+    //   this.announcementService.createAnnouncement(formData).subscribe({
+    //     next: (response) => {
+    //       if (response.code == 200) {
+    //         this.navigation.onMainMenuNav('Anuncios');
+    //         this.snackbarService.show('Guardado exitosamente', 'success');
+    //       }
+    //     },
+    //     error: (error) => {
+    //       console.error('Error token', error.error);
+    //       this.snackbarService.show(
+    //         'Ocurrió un error al guardar la información. Inténtelo de nuevo.',
+    //         'error'
+    //       );
+    //       this.isLoading = false;
+    //     },
+    //   });
+    // }
+
     this.clearForm();
   }
 
@@ -109,7 +191,6 @@ export class RecordBusObservationComponent {
     // this.busData.reset();
   }
   onCancel($event: string): void {
-    // this.router.navigate(['form']);
     this.navigation.onMainMenuNav('Anuncios');
   }
 }

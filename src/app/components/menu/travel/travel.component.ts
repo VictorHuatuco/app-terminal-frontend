@@ -14,43 +14,43 @@ import { NavigationService } from '../../../services/navigation.service';
 export class TravelComponent {
   public travelsData = [
     {
-      id: '',
+      id: 1,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 2,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 3,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 4,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 5,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 6,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',
     },
     {
-      id: '',
+      id: 7,
       company: 'Cruz del Sur',
       destination: 'Lima-Tacna',
       departureTime: '15:00',

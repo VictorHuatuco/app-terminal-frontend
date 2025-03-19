@@ -1,36 +1,3 @@
-<!-- <div class="card-container">
-  <div class="info-container">
-    <span class="text-label">Empresa:</span>
-    <p class="text-bold">{{ data.company }}</p>
-  </div>
-  <div class="info-container">
-    <div class="info-item">
-      <span class="text-label">Ruta:</span>
-      <span>{{ data.destination }}</span>
-    </div>
-    <div class="info-item">
-      <span class="text-label">Hora:</span>
-      <span>{{ data.departureTime }}</span>
-    </div>
-    <div *ngIf="data.boardingGate" class="info-item">
-      <span class="text-label">Embarque:</span>
-      <span>{{ data.boardingGate }}</span>
-    </div>
-    <div *ngIf="data.observation" class="info-item">
-      <span class="text-label">Observación:</span>
-      <span>{{ data.observation }}</span>
-    </div>
-  </div>
-  <div class="actions-container">
-    <button>
-      <i class="fa-solid fa-trash"></i>
-    </button>
-    <button>
-      <i class="fa-solid fa-pen-to-square"></i>
-    </button>
-  </div>
-</div> -->
-
 <div class="card-container">
   <div class="info-container">
     <div>
@@ -57,11 +24,11 @@
   </div>
 
   <div class="actions-container">
-    <button>
-      <i class="fa-solid fa-trash"></i>
-    </button>
-    <button>
+    <button type="button" (click)="edit(data.id)">
       <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button type="button" (click)="delete(data.id)">
+      <i class="fa-solid fa-trash"></i>
     </button>
   </div>
 </div>

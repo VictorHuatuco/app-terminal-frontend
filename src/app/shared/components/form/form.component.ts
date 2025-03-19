@@ -44,12 +44,14 @@ export class FormComponent implements OnInit {
   @Input() public buttonsData: { text: string; type: string }[] = [];
 
   @Output()
-  public onEmitFormData: EventEmitter<FormGroup> = new EventEmitter();
+  public onFormData: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() public onEmitButtonAction: EventEmitter<string> =
     new EventEmitter();
 
   public formData!: FormGroup;
+  // @Input() isFormDataPatched: boolean = false;
+  // @Input() FormDataPatched!: FormGroup;
   public isLoading = false;
 
   emitFormData(): void {
@@ -64,7 +66,7 @@ export class FormComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-    this.onEmitFormData.emit(this.formData);
+    this.onFormData.emit(this.formData.value);
     console.log(this.formData.value);
   }
 
@@ -81,6 +83,11 @@ export class FormComponent implements OnInit {
   ) {}
 
   public initializeForm(): void {
+    // if (this.isFormDataPatched) {
+    //   this.formData = this.FormDataPatched;
+    //   return;
+    // }
+
     let formGroupConfig: { [key: string]: FormControl } = {};
 
     this.formFields.forEach((field) => {
@@ -92,46 +99,7 @@ export class FormComponent implements OnInit {
     this.formData = new FormGroup(formGroupConfig);
   }
 
-  // onSubmit(): void {
-  //   if (this.formData.invalid) {
-  //     this.formData.markAllAsTouched();
-  //     this.snackbarService.show(
-  //       'Complete los campos necesarios antes de continuar.',
-  //       'error'
-  //     );
-  //     return;
-  //   }
-
-  //   // this.busService.createEnterprise(busData).subscribe({
-  //   //   next: (response) => {
-  //   //     if (response.code == 200) {
-  //   this.onRedirectToMenu();
-  //   this.snackbarService.show('Guardado exitosamente', 'success');
-  //   //     }
-  //   //   },
-  //   //   error: (error) => {
-  //   //     console.error('Error token', error.error);
-  //   //     this.snackbarService.show(
-  //   //       'Ocurrió un error al guardar la información. Inténtelo de nuevo.',
-  //   //       'error'
-  //   //     );
-  //   //   },
-  //   // });
-
-  //   this.socketService.sendBus(this.formData.value);
-  //   this.clearForm();
-  // }
-
-  // onRedirectToMenu(): void {
-  //   this.router.navigate(['form']);
-  // }
-
-  // clearForm() {
-  //   this.formData.reset();
-  // }
-
   onEmitAction(): void {
     this.onEmitButtonAction.emit('se emite evento');
-    console.log('se emitira evento');
   }
 }

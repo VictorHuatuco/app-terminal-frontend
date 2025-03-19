@@ -1,9 +1,9 @@
 <!-- <div class="wrapper-content"> -->
-<h1 class="title">Anunciar estado del bus</h1>
+<h1 class="title">{{ title }}</h1>
 <app-form
   [formFields]="formFields"
   [buttonsData]="buttonsData"
-  (onEmitFormData)="onSubmit($event)"
+  (onFormData)="onSubmit($event)"
   (onEmitButtonAction)="onCancel($event)"
 ></app-form>
 <!-- </div> -->

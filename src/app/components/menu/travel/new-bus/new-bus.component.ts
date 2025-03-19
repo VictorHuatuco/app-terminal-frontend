@@ -75,7 +75,9 @@ export class NewBusComponent {
     { text: 'Cancelar', type: 'button' },
   ];
 
-  onSubmit($event: FormGroup): void {}
+  onSubmit(data: any): void {
+    console.log('llego la data del form', data);
+  }
 
   constructor(
     private socketService: SocketService,

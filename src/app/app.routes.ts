@@ -38,6 +38,10 @@ export const routes: Routes = [
             path: 'new',
             component: RecordBusObservationComponent,
           },
+          {
+            path: 'edit/:id',
+            component: RecordBusObservationComponent,
+          },
         ],
       },
       {
@@ -51,6 +55,10 @@ export const routes: Routes = [
             path: 'new-bus',
             component: NewBusComponent,
           },
+          {
+            path: 'edit/:id',
+            component: NewBusComponent,
+          },
         ],
       },
       {
@@ -58,20 +66,5 @@ export const routes: Routes = [
         component: AdvertisementComponent,
       },
     ],
-    // children: [
-    //   {
-    //     path: '',
-    //     component: MenuComponent,
-    //   } ,
-    //   {
-    //     path: 'new',
-    //     component: MenuComponent,
-    //    },
-    //    {
-    //     path: 'edit/:id',
-    //     component: MenuComponent,
-    //    },
-    // ],
-    // redirectTo: '',
   },
 ];

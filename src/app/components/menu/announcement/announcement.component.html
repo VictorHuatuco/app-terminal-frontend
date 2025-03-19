@@ -12,5 +12,7 @@
   <app-info-card
     [data]="announcement"
     *ngFor="let announcement of announcementsData"
+    (idToEditData)="onEdit($event)"
+    (idToDelete)="onDelete($event)"
   ></app-info-card>
 </div>
