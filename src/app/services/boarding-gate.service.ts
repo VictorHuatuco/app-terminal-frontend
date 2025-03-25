@@ -6,18 +6,14 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class BusCompaniesService {
+export class BoardingGateService {
   constructor(private httpClient: HttpClient) {}
 
-  private POST_ENDPOINT: string = 'bus_companies';
+  private POST_ENDPOINT: string = 'boarding_gates';
   private BASE_URL: string = `${environment.api}`;
   private REQUEST_URL: string = `${this.BASE_URL}/${this.POST_ENDPOINT}`;
 
-  getBusCompanies(): Observable<any> {
+  getBoardingGates(): Observable<any> {
     return this.httpClient.get<any>(`${this.REQUEST_URL}`);
-  }
-
-  getById(id: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.REQUEST_URL}/${id}`);
   }
 }

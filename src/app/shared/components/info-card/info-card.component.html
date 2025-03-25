@@ -2,22 +2,22 @@
   <div class="info-container">
     <div>
       <p class="text-bold">{{ data.company }}</p>
-      <span>{{ data.destination }} - {{ data.departureTime }} </span>
+      <span>{{ data.destination }} - {{ data.departure_time }} </span>
     </div>
     <div class="details">
-      <div *ngIf="data.boardingGate" class="details-item">
+      <div class="details-item">
         <span class="text-label">Embarque:</span>
-        <span class="text-content">Puerta {{ data.boardingGate }}</span>
+        <span class="text-content">{{ data.boarding_gate || "-" }}</span>
       </div>
       <div *ngIf="data.observation" class="details-item">
         <span class="text-label">Observación:</span>
         <span
           [ngClass]="{
-            red: data.observation === 'Cancelado',
-            yellow: data.observation === 'Atrasado',
-            green: data.observation === 'Disponible',
+            red: data.observation === 'cancelado',
+            yellow: data.observation === 'atrasado',
+            green: data.observation === 'arrivado',
           }"
-          >{{ data.observation }}</span
+          >{{ data.observation | titlecase }}</span
         >
       </div>
     </div>

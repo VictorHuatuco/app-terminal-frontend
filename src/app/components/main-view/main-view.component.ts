@@ -29,7 +29,7 @@ export class MainViewComponent implements OnInit {
       company: 'Cruz del Sur',
       destination: 'Huancavelica',
       arrivalTime: '15:00',
-      boardingGate: '23',
+      boarding_gate: '23',
       observation: 'Cancelado',
     },
     {
@@ -37,7 +37,7 @@ export class MainViewComponent implements OnInit {
       company: 'Cruz del Sur',
       destination: 'Huancavelica',
       arrivalTime: '15:00',
-      boardingGate: '23',
+      boarding_gate: '23',
       observation: 'Atrasado',
     },
   ]);

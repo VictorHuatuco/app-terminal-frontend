@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -26,12 +33,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
-    ReactiveFormsModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
 export class FormComponent implements OnInit {
+  @Input() public formDataInitialValues: any;
   @Input()
   public formFields: {
     label: string;
@@ -39,12 +46,13 @@ export class FormComponent implements OnInit {
     type: string;
     options?: { value: string; label: string }[];
     validators?: string;
+    disabled?: boolean;
   }[] = [];
 
   @Input() public buttonsData: { text: string; type: string }[] = [];
 
   @Output()
-  public onFormData: EventEmitter<FormGroup> = new EventEmitter();
+  public onEmitFormData: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() public onEmitButtonAction: EventEmitter<string> =
     new EventEmitter();
@@ -52,30 +60,26 @@ export class FormComponent implements OnInit {
   public formData!: FormGroup;
   // @Input() isFormDataPatched: boolean = false;
   // @Input() FormDataPatched!: FormGroup;
-  public isLoading = false;
+  @Input() public isLoading = false;
 
-  emitFormData(): void {
-    if (this.isLoading) return;
-    this.isLoading = true;
-    if (this.formData.invalid) {
-      this.formData.markAllAsTouched();
-      this.snackbarService.show(
-        'Complete los campos necesarios antes de continuar.',
-        'error'
-      );
-      this.isLoading = false;
-      return;
+  handleButtonClick(button: { text: string; type: string }): void {
+    if (button.type === 'submit') {
+      this.onEmitFormData.emit(this.formData);
+    } else {
+      this.onEmitButtonAction.emit(button.text);
     }
-    this.onFormData.emit(this.formData.value);
-    console.log(this.formData.value);
   }
 
   ngOnInit() {
-    // this.formData.valueChanges.subscribe(() => {
-    //   console.log(this.formData.value);
-    // });
     this.initializeForm();
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['formDataInitialValues'] && this.formData) {
+      this.formData.patchValue(this.formDataInitialValues);
+    }
+  }
+
   constructor(
     private socketService: SocketService,
     private router: Router,
@@ -83,23 +87,29 @@ export class FormComponent implements OnInit {
   ) {}
 
   public initializeForm(): void {
-    // if (this.isFormDataPatched) {
-    //   this.formData = this.FormDataPatched;
-    //   return;
-    // }
-
     let formGroupConfig: { [key: string]: FormControl } = {};
 
     this.formFields.forEach((field) => {
       const validators =
         field.validators === 'required' ? [Validators.required] : [];
-      formGroupConfig[field.formControl] = new FormControl('', validators);
+      formGroupConfig[field.formControl] = new FormControl(
+        { value: '', disabled: field.disabled || false },
+        validators
+      );
     });
 
     this.formData = new FormGroup(formGroupConfig);
+    this.handleObservationChange();
   }
 
-  onEmitAction(): void {
-    this.onEmitButtonAction.emit('se emite evento');
+  handleObservationChange(): void {
+    this.formData.get('observation')?.valueChanges.subscribe((value) => {
+      if (value === 'arrived') {
+        this.formData.get('boarding_gate')?.enable();
+      } else {
+        this.formData.get('boarding_gate')?.disable();
+        this.formData.get('boarding_gate')?.setValue(''); // Opcional: limpiar selección
+      }
+    });
   }
 }

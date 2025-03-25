@@ -16,4 +16,8 @@ export class DestinationService {
   getDestinations(): Observable<any> {
     return this.httpClient.get<any>(`${this.REQUEST_URL}`);
   }
+
+  getById(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.REQUEST_URL}/${id}`);
+  }
 }

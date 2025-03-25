@@ -3,6 +3,6 @@ export interface Bus {
   company: string;
   destination: string;
   arrivalTime: string;
-  boardingGate: string;
+  boarding_gate: string;
   observation: string;
 }

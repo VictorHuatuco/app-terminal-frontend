@@ -111,11 +111,11 @@ form {
 //   margin: 15px !important;
 // }
 
-// .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
-//   font-weight: bold;
-//   color: white;
-//   text-align: center;
-// }
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  // font-weight: bold;
+  color: white;
+  text-align: center;
+}
 // .mat-mdc-snack-bar-container
 //   .mat-mdc-snackbar-surface
 //   .mat-mdc-button:not(:disabled) {

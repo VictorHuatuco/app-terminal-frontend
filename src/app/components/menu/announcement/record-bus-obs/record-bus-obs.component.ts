@@ -19,6 +19,9 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { AnnouncementService } from '../../../../services/announcement.service';
 import { Announcement } from '../../../../interfaces/announcement';
 import { TravelsService } from '../../../../services/travels.service';
+import { DestinationService } from '../../../../services/destination.service';
+import { BusCompaniesService } from '../../../../services/bus-companies.service';
+import { BoardingGateService } from '../../../../services/boarding-gate.service';
 
 @Component({
   selector: 'app-record-bus-observation',
@@ -37,10 +40,15 @@ import { TravelsService } from '../../../../services/travels.service';
   styleUrl: './record-bus-obs.component.scss',
 })
 export class RecordBusObservationComponent implements OnInit {
+  public observations = [
+    { value: 'canceled', label: 'cancelado' },
+    { value: 'arrived', label: 'arrivado' },
+    { value: 'delayed', label: 'atrasado' },
+  ];
   public formFields = [
     {
       label: 'Listado de viajes disponibles',
-      formControl: 'travels',
+      formControl: 'travel',
       type: 'select',
       options: [
         {
@@ -49,30 +57,27 @@ export class RecordBusObservationComponent implements OnInit {
         },
       ],
       validators: 'required',
-    },
-    {
-      label: 'Puerta de abordaje',
-      formControl: 'boardingGate',
-      type: 'select',
-      options: [
-        {
-          value: '',
-          label: '',
-        },
-      ],
-      validators: 'required',
+      disabled: false,
     },
     {
       label: 'Observación',
       formControl: 'observation',
       type: 'select',
+      options: this.observations,
+      validators: 'required',
+      disabled: false,
+    },
+    {
+      label: 'Puerta de abordaje',
+      formControl: 'boarding_gate',
+      type: 'select',
       options: [
         {
           value: '',
           label: '',
         },
       ],
-      validators: 'required',
+      disabled: true,
     },
   ];
 
@@ -84,11 +89,12 @@ export class RecordBusObservationComponent implements OnInit {
   public isEditMode: boolean = false;
   public title: string = '';
   public id: number = 0;
-  // public formData: FormGroup = new FormGroup({});
-  public formDataPatched: FormGroup = new FormGroup({});
-  public isFormDataPatched: boolean = false;
+  public formDataInitialValues: any = {};
 
   ngOnInit(): void {
+    this.getTravels();
+    this.getBoardingGates();
+
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.isEditMode = true;
@@ -96,34 +102,54 @@ export class RecordBusObservationComponent implements OnInit {
         this.id = params['id'];
 
         // implementar endpoint para obtener el announcement
-        // this.announcementService.getById(this.id).subscribe({
-        //   next: (response) => {
-        //     if (response.error != null) {
-        //       this.navigation.onMainMenuNav('Anuncios');
-        //     }
-        // this.isFormDataPatched = true
-        //     this.formDataPatched.patchValue(response.data);
-        //   },
-        // });
+        this.announcementService.getById(this.id).subscribe({
+          next: (response) => {
+            console.log('respuesta get by id', response);
+            if (!response) {
+              this.navigation.onMainMenuNav('Anuncios');
+            }
+            this.formDataInitialValues = {
+              travel: response.id_travels,
+              observation: response.observation,
+              boarding_gate: response.id_boarding_gates,
+            };
+            console.log(this.formDataInitialValues);
+          },
+        });
       } else {
         this.title = 'Anunciar estado del bus';
       }
     });
-
-    this.getTavels();
   }
   constructor(
     private socketService: SocketService,
     private navigation: NavigationService,
     private snackbarService: SnackbarService,
     private route: ActivatedRoute,
-    private travelsService: TravelsService // private announcementService: AnnouncementService
+    private travelsService: TravelsService, // private announcementService: AnnouncementService
+    private destinationService: DestinationService,
+    private busCompaniesService: BusCompaniesService,
+    private announcementService: AnnouncementService,
+    private boardingGateService: BoardingGateService
   ) {}
 
-  getTavels() {
+  getTravels() {
     this.travelsService.getTravels().subscribe({
       next: (response) => {
         console.log('lista viajes', response);
+        const options = response.map((op: any) => ({
+          value: op.id,
+          label: `${op.bus_company.bus_company} - ${
+            op.destination.destination
+          } - ${op.departure_time.slice(0, 5)}`,
+        }));
+
+        this.formFields = this.formFields.map((field: any) =>
+          field.formControl === 'travel'
+            ? { ...field, options: options }
+            : field
+        );
+        console.log(this.formFields);
       },
       error: (error) => {
         console.error('Error', error.error);
@@ -131,13 +157,33 @@ export class RecordBusObservationComponent implements OnInit {
     });
   }
 
-  onSubmit(data: FormGroup): void {
-    const formData = data.value;
-    // this.socketService.sendBus(this.busData.value);
+  getBoardingGates() {
+    this.boardingGateService.getBoardingGates().subscribe({
+      next: (response) => {
+        console.log(response);
+        const boarding_gates = response.map((gate: any) => ({
+          value: gate.id,
+          label: gate.boarding_gate,
+        }));
+
+        this.formFields = this.formFields.map((field) =>
+          field.formControl === 'boarding_gate'
+            ? { ...field, options: boarding_gates }
+            : field
+        );
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  onSubmit(form: FormGroup): void {
+    console.log(form);
     if (this.isLoading) return;
     this.isLoading = true;
-    if (formData.invalid) {
-      formData.markAllAsTouched();
+    if (form.invalid) {
+      form.markAllAsTouched();
       this.snackbarService.show(
         'Complete los campos necesarios antes de continuar.',
         'error'
@@ -146,43 +192,56 @@ export class RecordBusObservationComponent implements OnInit {
       return;
     }
 
-    // maneja el envio del formulario
-    // if (this.isEditMode) {
-    //   formData.id = this.id;
-    //   this.announcementService.updateAnnouncement(formData).subscribe({
-    //     next: (response) => {
-    //       if (response.code == 200) {
-    //         this.navigation.onMainMenuNav('Anuncios');
-    //         this.snackbarService.show('Actualizado exitosamente', 'success');
-    //       }
-    //     },
-    //     error: (error) => {
-    //       console.error('Error token', error.error);
-    //       this.snackbarService.show(
-    //         'Ocurrió un error al actualizar la información. Inténtelo de nuevo.',
-    //         'error'
-    //       );
-    //       this.isLoading = false;
-    //     },
-    //   });
-    // } else {
-    //   this.announcementService.createAnnouncement(formData).subscribe({
-    //     next: (response) => {
-    //       if (response.code == 200) {
-    //         this.navigation.onMainMenuNav('Anuncios');
-    //         this.snackbarService.show('Guardado exitosamente', 'success');
-    //       }
-    //     },
-    //     error: (error) => {
-    //       console.error('Error token', error.error);
-    //       this.snackbarService.show(
-    //         'Ocurrió un error al guardar la información. Inténtelo de nuevo.',
-    //         'error'
-    //       );
-    //       this.isLoading = false;
-    //     },
-    //   });
-    // }
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Obtiene "YYYY-MM-DD"
+
+    const data = {
+      id_travels: form.value.travel,
+      id_boarding_gates: form.value.boarding_gate || null,
+      id_users: 1,
+      date_announcements: formattedDate,
+      status: true,
+      observation: form.value.observation,
+    };
+
+    if (this.isEditMode) {
+      this.announcementService.updateAnnouncement(data, this.id).subscribe({
+        next: (response) => {
+          console.log('respuesta del update', response);
+          if (response) {
+            this.navigation.onMainMenuNav('Anuncios');
+            this.snackbarService.show('Actualizado exitosamente', 'success');
+          }
+        },
+        error: (error) => {
+          console.error(error);
+          this.snackbarService.show(
+            'Ocurrió un error al actualizar la información. Inténtelo de nuevo.',
+            'error'
+          );
+          this.isLoading = false;
+        },
+      });
+    } else {
+      this.announcementService.createAnnouncement(data).subscribe({
+        next: (response) => {
+          console.log('respuesta', response);
+          if (response.message == 'success') {
+            this.snackbarService.show('Guardado exitosamente', 'success');
+            this.navigation.onMainMenuNav('Anuncios');
+            this.isLoading = false;
+          }
+        },
+        error: (error) => {
+          console.error(error);
+          this.snackbarService.show(
+            'Ocurrió un error al enviar los datos',
+            'error'
+          );
+          this.isLoading = false;
+        },
+      });
+    }
 
     this.clearForm();
   }

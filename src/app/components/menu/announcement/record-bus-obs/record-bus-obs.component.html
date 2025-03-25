@@ -3,7 +3,8 @@
 <app-form
   [formFields]="formFields"
   [buttonsData]="buttonsData"
-  (onFormData)="onSubmit($event)"
+  [formDataInitialValues]="formDataInitialValues"
+  (onEmitFormData)="onSubmit($event)"
   (onEmitButtonAction)="onCancel($event)"
 ></app-form>
 <!-- </div> -->

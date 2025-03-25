@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class NavigationService {
+  public activeButton: string = 'Anuncios';
+
   constructor(private router: Router) {}
 
   public onMainMenuNav(text: string) {
@@ -32,5 +34,14 @@ export class NavigationService {
       // Eliminar: 'menu/announcements',
     };
     this.router.navigate([routes[text] || 'menu/travels']);
+  }
+
+  public setActiveButton(text: string): void {
+    localStorage.setItem('activeButton', text);
+  }
+
+  public getActiveButton() {
+    this.activeButton = localStorage.getItem('activeButton') || '';
+    return this.activeButton;
   }
 }

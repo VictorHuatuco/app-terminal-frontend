@@ -12,5 +12,7 @@
   <app-info-card
     [data]="travel"
     *ngFor="let travel of travelsData"
+    (idToEditData)="onEdit($event)"
+    (idToDelete)="onDelete($event)"
   ></app-info-card>
 </div>

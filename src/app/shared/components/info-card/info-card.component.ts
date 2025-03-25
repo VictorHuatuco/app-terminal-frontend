@@ -6,8 +6,8 @@ interface Data {
   id: number;
   company: string;
   destination: string;
-  departureTime: string;
-  boardingGate?: string;
+  departure_time: string;
+  boarding_gate?: string;
   observation?: string;
 }
 
@@ -23,8 +23,8 @@ export class InfoCardComponent {
     id: 1,
     company: 'Cruz del Sur',
     destination: 'Tacna',
-    departureTime: '15:00',
-    boardingGate: '23',
+    departure_time: '15:00',
+    boarding_gate: '23',
     observation: 'Atrasado',
   };
 

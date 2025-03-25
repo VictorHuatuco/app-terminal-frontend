@@ -1,5 +1,5 @@
 <div class="general-container">
-  <form [formGroup]="formData" (ngSubmit)="emitFormData()">
+  <form [formGroup]="formData">
     <ng-container *ngFor="let field of formFields">
       <mat-form-field appearance="outline">
         <mat-label>{{ field.label }}</mat-label>
@@ -16,12 +16,13 @@
           <mat-select
             *ngSwitchCase="'select'"
             [formControlName]="field.formControl"
+            [disabled]="formData.get(field.formControl)?.disabled ?? false"
           >
             <mat-option
               *ngFor="let option of field.options"
               [value]="option.value"
             >
-              {{ option.label }}
+              {{ option.label | titlecase }}
             </mat-option>
           </mat-select>
         </ng-container>
@@ -37,30 +38,17 @@
     </ng-container>
 
     <div class="btns-wrapper">
-      <ng-container *ngFor="let button of buttonsData"
-        ><button
-          mat-raised-button
-          [type]="button.type"
-          *ngIf="button.type === 'submit'"
-        >
-          {{ button.text }}
-        </button>
+      <ng-container *ngFor="let button of buttonsData">
         <button
           mat-raised-button
           [type]="button.type"
-          *ngIf="button.type != 'submit'"
-          (click)="onEmitAction()"
-          class="outline"
+          (click)="handleButtonClick(button)"
+          [class.outline]="button.type !== 'submit'"
+          [disabled]="isLoading"
         >
           {{ button.text }}
         </button>
       </ng-container>
     </div>
-
-    <!-- <ng-container
-      ><button mat-raised-button (click)="onRedirectToMenu()">
-        Cancelar
-      </button></ng-container
-    > -->
   </form>
 </div>
