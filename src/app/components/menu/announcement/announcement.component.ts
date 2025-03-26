@@ -8,6 +8,7 @@ import { NavigationService } from '../../../services/navigation.service';
 import { ConfirmDialogService } from '../../../services/confirm-dialog.service';
 import { AnnouncementService } from '../../../services/announcement.service';
 import { SnackbarService } from '../../../services/snackbar.service';
+import { SocketService } from '../../../services/socket.service';
 
 @Component({
   selector: 'app-announcement',
@@ -33,7 +34,8 @@ export class AnnouncementComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private announcementService: AnnouncementService,
     private snackbarService: SnackbarService
-  ) {}
+  ) // private socketService: SocketService
+  {}
   public handleRedirection(text: string): void {
     this.navigation.onAnnouncementNav(text);
   }
@@ -100,4 +102,16 @@ export class AnnouncementComponent implements OnInit {
       },
     });
   }
+
+  // listenToWebSocket(): void {
+  //   this.socketService.getMessages().subscribe({
+  //     next: (data) => {
+  //       console.log('Anuncios en tiempo real:', data);
+  //       this.announcementsData = data;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al recibir anuncios:', error);
+  //     },
+  //   });
+  // }
 }

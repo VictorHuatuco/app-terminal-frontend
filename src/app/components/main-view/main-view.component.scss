@@ -1,10 +1,10 @@
-// .buses-list {
-//   // margin-top: 10px;
-// }
+// Tabla
 .mdc-data-table__cell,
 .mat-mdc-header-cell {
   text-align: center;
-  font-size: clamp(2.5rem, 3.5vw, 5rem);
+  // font-size: clamp(2.5rem, 3.5vw, 5rem);
+  font-size: 16px;
+  padding: 1.5vh 1vw;
   // font-size: 2rem;
 }
 
@@ -40,9 +40,22 @@ thead > tr > th {
 //   height: 10px !important;
 // }
 
-// .mat-mdc-table {
-//   height: 10px !important;
-// }
+.mat-mdc-table {
+  max-width: 100%;
+}
+
+// --------------------------------------------------------
+
+// Contenedores
+
+.main-view-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.container-top-content {
+  display: flex;
+}
 
 .main-view-container,
 .left-content {
@@ -53,12 +66,28 @@ thead > tr > th {
 .left-content {
   background-color: var(--primary-color);
   flex: 1;
+  // flex: 3;
   justify-content: space-between;
+  // height: auto;
 }
 
-.container-top-content {
-  display: flex;
+.right-content {
+  // flex: 7;
+  // height: auto;
+  background-color: aqua;
+
+  width: 100%;
+  max-width: 80vw; // Máximo ancho para que no se vea desproporcionado
+  height: auto;
+  max-height: 70vh;
 }
+
+.buses-container {
+  max-width: 100% !important;
+}
+
+// -----------------------------------------------------
+// otros elementos
 
 .left-content .logo {
   width: 60px;
@@ -94,7 +123,11 @@ h1 {
 }
 
 .video {
-  height: 60vh;
+  // height: 60vh;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  // max-height: 70vh;
 }
 
 .small-img {

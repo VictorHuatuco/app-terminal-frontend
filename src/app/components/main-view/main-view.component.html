@@ -15,17 +15,19 @@
         class="brands"
       />
     </div>
-    <!-- VIDEO PUBLICIDAD -->
-    <video controls class="video">
-      <source src="/assets/videos/anuncio1.mp4" type="video/mp4" />
-      Tu navegador no soporta la etiqueta de video.
-    </video>
+    <div class="right-content">
+      <!-- VIDEO PUBLICIDAD -->
+      <video controls class="video">
+        <source src="/assets/videos/anuncio1.mp4" type="video/mp4" />
+        Tu navegador no soporta la etiqueta de video.
+      </video>
 
-    <!-- <app-video></app-video> -->
+      <!-- <app-video></app-video> -->
+    </div>
   </div>
   <!-- LISTA DE BUSES -->
-  <div class="buses-list">
-    <table mat-table [dataSource]="dataOnArrivingBuses">
+  <div class="buses-container">
+    <table mat-table [dataSource]="announcementsData">
       <ng-container matColumnDef="Empresa">
         <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
         <td mat-cell *matCellDef="let bus">{{ bus.company }}</td>

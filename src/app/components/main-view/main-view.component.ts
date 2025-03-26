@@ -23,7 +23,7 @@ export class MainViewComponent implements OnInit {
     'Embarque',
     'Observación',
   ];
-  public dataOnArrivingBuses = new MatTableDataSource<Bus>([
+  public announcementsData = new MatTableDataSource<Bus>([
     {
       id: '22',
       company: 'Cruz del Sur',
@@ -50,9 +50,14 @@ export class MainViewComponent implements OnInit {
   }
 
   private subscribeToBusUpdates() {
-    this.socketService.onBusActualizado().subscribe((data) => {
-      console.log('data por mostrar', data);
-      this.dataOnArrivingBuses.data = [...this.dataOnArrivingBuses.data, data];
+    this.socketService.getMessages().subscribe({
+      next: (data) => {
+        console.log('Anuncios en tiempo real:', data);
+        // this.announcementsData = data;
+      },
+      error: (error) => {
+        console.error('Error al recibir anuncios:', error);
+      },
     });
   }
   private getCurrentTime(): Observable<string> {

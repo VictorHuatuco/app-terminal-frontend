@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { Bus } from '../interfaces/bus';
 
@@ -7,26 +7,31 @@ import { Bus } from '../interfaces/bus';
   providedIn: 'root',
 })
 export class SocketService {
-  private socket: Socket;
-  private readonly SOCKET_URL = `http://${window.location.hostname}:5001`; // Usa la IP dinámica
+  private socket!: Socket;
+  private messagesSubject = new Subject<any>();
+  private readonly SOCKET_URL = 'http://localhost:8000';
 
   constructor() {
+    this.connect();
+  }
+
+  private connect(): void {
     this.socket = io(this.SOCKET_URL);
-  }
 
-  sendBus(bus: Bus) {
-    this.socket.emit('bus', bus);
-  }
-
-  onBusActualizado(): Observable<Bus> {
-    return new Observable((observer) => {
-      this.socket.on('bus_actualizado', (data: Bus) => {
-        observer.next(data);
-      });
-
-      return () => {
-        this.socket.off('bus_actualizado'); // Limpia la suscripción
-      };
+    this.socket.on('message', (data) => {
+      this.messagesSubject.next(data);
     });
+
+    this.socket.on('connect_error', (error) => {
+      console.error('Socket.io Error:', error);
+    });
+
+    this.socket.on('disconnect', () => {
+      console.warn('Socket.io desconectado. Intentando reconectar...');
+    });
+  }
+
+  getMessages(): Observable<any> {
+    return this.messagesSubject.asObservable();
   }
 }

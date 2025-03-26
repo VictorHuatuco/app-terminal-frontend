@@ -55,15 +55,15 @@ app-menu-view {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+  padding: 5px;
 }
 
 // .wrapper-content {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 40px;
-//   align-self: center;
+//   h1 {
+//     margin-bottom: 50px;
+//   }
 // }
 
 // -------------------------------------------------------------
@@ -79,7 +79,7 @@ app-menu-view {
   font-size: 1.6rem;
   text-align: center;
   margin: 0;
-  // margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 // -----------------------------------------------------------
@@ -185,14 +185,23 @@ form {
   .grid-container {
     grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
   }
+  .title {
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 30px;
+  }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 767px) and (max-width: 991px) {
   .content {
     align-content: start;
   }
   .btns-wrapper {
     flex-direction: column;
+  }
+  .grid-container {
+    grid-template-columns: 1fr 1fr; /* 1 columna en pantallas pequeñas */
   }
   // .btns-wrapper {
   //   width: 100%;
@@ -202,8 +211,8 @@ form {
 
 /* pantalla tipo tablet */
 
-@media (min-width: 769px) and (max-width: 991px) {
-}
+// @media (min-width: 769px) and (max-width: 991px) {
+// }
 
 /* pantalla mediana */
 @media (min-width: 992px) and (max-width: 1199px) {
